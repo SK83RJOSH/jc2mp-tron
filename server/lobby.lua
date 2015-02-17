@@ -38,7 +38,6 @@ function Lobby:__init(config)
 	}
 	
 	Tron.Broadcast("Lobby on " .. self.name .. " in progress, type /tron to join the queue!", Color.Yellow)
-
 end
 
 function Lobby:GetQueue()
@@ -194,8 +193,7 @@ function Lobby:PreTick()
 	if state == GamemodeState.WAITING then
 		if self.timer:GetSeconds() >= self.startingTime and self.startingTime ~= 0 then
 			self:SetState(GamemodeState.PREPARING)
-			Tron.Broadcast("Starting tron with " .. self:GetQueue():GetSize() .. " players!", Color.Yellow)
-			Tron.Broadcast("A tron game is about to begin, type /tron to join the queue!", Color.Yellow)
+			self:Broadcast("Starting tron with " .. self:GetQueue():GetSize() .. " players!", Color.Yellow)
 		elseif self.startingTime == 0 and self.timer:GetSeconds() > 120 then
 			local playerCount = self:GetQueue():GetSize()
 
@@ -374,7 +372,7 @@ function Lobby:Disband(winner)
 	self:SetState(GamemodeState.ENDING)
 
 	if winner then
-		Tron.Broadcast(winner:GetName() .. " won!", Color.Yellow)
+		self:Broadcast(winner:GetName() .. " won!", Color.Yellow)
 		winner:SetMoney(winner:GetMoney() + 5000)
 	end
 
