@@ -8,8 +8,6 @@ function Lobby:__init(config)
 	self.playerOrigins = {}
 	self.startingTime = 0
 	self.waitingTime = 30
-	
-	self.muted = false
 
 	self.name = config.name
 	self.position = config.position
