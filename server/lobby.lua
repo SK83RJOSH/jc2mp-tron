@@ -192,8 +192,8 @@ function Lobby:PreTick()
 
 	if state == GamemodeState.WAITING then
 		if self.timer:GetSeconds() >= self.startingTime and self.startingTime ~= 0 then
-			self:SetState(GamemodeState.PREPARING)
 			self:Broadcast("Starting tron with " .. self:GetQueue():GetSize() .. " players!", Color.Yellow)
+			self:SetState(GamemodeState.PREPARING)
 		elseif self.startingTime == 0 and self.timer:GetSeconds() > 120 then
 			local playerCount = self:GetQueue():GetSize()
 
