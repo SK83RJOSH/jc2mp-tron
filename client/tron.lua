@@ -31,6 +31,7 @@ function Tron:__init()
 	Events:Subscribe("EntityDespawn", self, self.EntityDespawn)
 	Events:Subscribe("PreTick", self, self.PreTick)
 	Events:Subscribe("Render", self, self.Render)
+	Events:Subscribe("GameRender", self, self.GameRender)
 end
 
 function Tron:AddSegment(segments, segment)
@@ -372,11 +373,6 @@ function Tron:Render(args)
 	elseif self.state == GamemodeState.COUNTDOWN then
 		DrawCenteredShadowedText(Vector2(Render.Width / 2, 70), math.max(math.ceil(3 - self.timer:GetSeconds()), 1) .. "...", Color.Yellow, TextSize.Huge)
 	elseif self.state == GamemodeState.INPROGRESS then
-		for k, segments in pairs(self.segments) do
-			for k, segment in ipairs(segments) do
-				segment:Render()
-			end
-		end
 
 		if LocalPlayer:InVehicle() then
 			if gamepad then
@@ -437,6 +433,16 @@ function Tron:Render(args)
 		end
 
 		DrawCenteredShadowedText(Vector2(Render.Width - 75, Render.Height - 75 - ((#players + 1) * 20)), "Players", Color.White, 20)
+	end
+end
+
+function Tron:GameRender()
+	if self.state == GamemodeState.INPROGRESS then
+		for k, segments in pairs(self.segments) do
+			for k, segment in ipairs(segments) do
+				segment:Render()
+			end
+		end
 	end
 end
 
