@@ -36,8 +36,6 @@ function Lobby:__init(config)
 		Events:Subscribe("PlayerQuit", self, self.PlayerQuit),
 		Events:Subscribe("PlayerWorldChange", self, self.PlayerWorldChange)
 	}
-	
-	Tron.Broadcast("Lobby on " .. self.name .. " in progress, type /tron to join the queue!", Color.Yellow)
 end
 
 function Lobby:GetQueue()
@@ -194,15 +192,16 @@ function Lobby:PreTick()
 		if self.timer:GetSeconds() >= self.startingTime and self.startingTime ~= 0 then
 			self:Broadcast("Starting tron with " .. self:GetQueue():GetSize() .. " players!", Color.Yellow)
 			self:SetState(GamemodeState.PREPARING)
-		elseif self.startingTime == 0 and self.timer:GetSeconds() > 120 then
+		elseif self.startingTime == 0 and self.timer:GetSeconds() > 600 then
 			local playerCount = self:GetQueue():GetSize()
 
 			if playerCount == 0 then
-				self:Disband()
+				Tron.Broadcast("Lobby on " .. self.name .. " in progress, type /tron to join the queue!", Color.Yellow)
 			else
 				Tron.Broadcast("Lobby with " .. playerCount .. " player" .. (playerCount == 1 and "" or "s") .. " on " .. self.name .. " waiting to begin.", Color.Yellow)
-				self.timer:Restart()
 			end
+
+			self.timer:Restart()
 		end
 	elseif state == GamemodeState.PREPARING then
 		if self:GetQueue():GetSize() > 0 then
