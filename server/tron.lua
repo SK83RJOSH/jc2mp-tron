@@ -4,7 +4,7 @@ function Tron:__init()
 	self.lobbies = {}
 	self.admins = {"76561198015337595", "76561198018954954"}
 
-	Chat:Broadcast("Tron v0.5.3 loaded.", Color.Green)
+	Chat:Broadcast("Tron v0.5.4 loaded.", Color.Green)
 
 	Events:Subscribe("ModuleUnload", self, self.ModuleUnload)
 	Events:Subscribe("PreTick", self, self.PreTick)
